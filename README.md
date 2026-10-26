@@ -1,10 +1,39 @@
 # Sleep PDF
 
-A tiny local PDF reader made for reading in bed: pages sit side by side, fill the
-screen height, and drift past at a very slow, smooth speed. No clicking, no page
-turns — just read until you fall asleep.
+A local, distraction-free PDF reader designed for effortless reading in bed. Pages drift past at a gentle pace with zero clicks or page turns — just read until you fall asleep.
 
-## Start it
+![Sleep PDF Reading View](media/reader-hero.png)
+
+---
+
+## Features
+
+- **Dual Reading Modes**:
+  - **Horizontal Mode**: Pages sit side-by-side and drift smoothly across the screen.
+  - **Vertical Mode**: Continuous top-to-bottom reading with custom fluid sizing. Press `V` to switch anytime.
+- **Offline Library**: All opened books are automatically saved in local IndexedDB. Switch between books instantly without re-uploading. Press `L` or click the top-left document badge.
+- **Direct URL Routing**: Each book has its own clean URL (e.g. `http://localhost:5173/sample`). Bookmark or share URLs directly to resume that specific book.
+- **Smart Per-Book Progress**: Remembers your exact reading position, speed, night light, rotation, and reading mode for every book individually.
+- **Installable PWA**: Install as a standalone desktop app on macOS or add to the iPad/iPhone Home Screen for a native, distraction-free experience.
+- **Night-Reading Visuals**: Adjustable screen dimming (up to 90%) and warm sepia lighting for pitch-black rooms.
+- **90° Sideways Rotation**: Read lying on your side with the Mac or iPad.
+- **Screen Wake Lock**: Automatically prevents your screen from sleeping while auto-scrolling.
+
+---
+
+## Screenshots
+
+| Offline Library Drawer | Vertical Reading Mode |
+|:---:|:---:|
+| ![Library Drawer](media/library-drawer.png) | ![Vertical Reading](media/vertical-reading.png) |
+
+| Continue Reading & Start Screen |
+|:---:|
+| ![Empty State](media/empty-state.png) |
+
+---
+
+## Getting Started
 
 ```bash
 npm install
@@ -13,89 +42,57 @@ npm run dev
 
 Then open <http://127.0.0.1:5173>.
 
-Or double-click **Sleep PDF.command** (it installs dependencies the first time,
-starts the server, and opens your browser).
+Or double-click **Sleep PDF.command** on macOS (it installs dependencies the first time, starts the server, and opens your browser automatically).
 
-The dev server needs to stay running while you read. Closing the Terminal window
-stops it.
+---
 
-## Read PDFs from Google Drive on an iPad
+## Controls & Shortcuts
 
-The reader is a web page, so the iPad can use the Mac's copy over Wi-Fi. No app
-install, and no download to the iPad's storage:
-
-1. Put the iPad on the same Wi-Fi network as the Mac and keep the Mac awake.
-2. On the iPad, open Safari and go to `http://<mac-ip>:5173` (find the Mac's IP
-   in System Settings → Wi-Fi, or run `ipconfig getifaddr en0`). The dev server is
-   already on the LAN when started with `npm run dev`.
-3. Tap **Choose a PDF**, then **Browse** → **Google Drive** → pick the PDF. Safari
-   streams it straight into the reader; there is no file saved in Files or
-   Downloads. The PDF and your page position stay cached in the browser, so it
-   resumes offline afterwards.
-4. If **Google Drive** is not listed in Files: open the **Files** app, tap
-   **Browse**, tap the **•••** button, choose **Edit**, and turn on **Google
-   Drive**. It needs the Google Drive app installed and signed in.
-5. Tap **Share → Add to Home Screen** for a full-screen, no-browser-chrome
-   reader.
-
-Notes: plain `http://` on the LAN means the screen wake lock is unavailable on
-iPadOS, so set **Auto-Lock → Never** (Settings → Display & Brightness) while
-reading. For a quick read with no auto-scroll, the Google Drive app's own PDF
-viewer also opens files without downloading.
-
-## Read a PDF
-
-- Click **Choose a PDF**, press `O`, or drop a file anywhere on the page.
-- The reader remembers the last PDF, the exact position, speed, dim level, and
-  rotation, so reopening the tab resumes where you stopped.
-- **Click a page** or press `Space` to start / pause the drift.
-- Press `F` for fullscreen, get comfortable, and let it scroll.
-- The screen wake lock keeps the Mac display awake while it is playing, so it
-  does not dim mid-page (as long as the lid is open).
-
-## Controls
-
-| Control | What it does |
+| Key / Control | Action |
 | --- | --- |
-| `Space` / click page | Play or pause |
-| `↑` `↓` | Speed up / slow down |
-| `←` `→` | Jump back / forward one screen |
-| `R` | Rotate pages 90° (sideways reading). `Shift` `R` rotates back the other way. |
-| `D` | Flip the drift direction. |
-| `G` or click the page count | Jump to a specific page. |
-| `N` | Warm light on / off |
-| `F` | Fullscreen |
+| `Space` / Click page | Play / Pause auto-drift |
+| `V` | Switch reading mode (Horizontal ⇄ Vertical) |
+| `L` / Click title badge | Open / Close Library drawer |
+| `↑` `↓` | Increase / decrease auto-drift speed |
+| `←` `→` | Jump backward / forward one screen |
+| `R` | Rotate pages 90° (sideways). `Shift` + `R` rotates back |
+| `D` | Flip drift direction (Left ⇄ Right) |
+| `G` / Click page counter | Jump to a specific page number |
+| `N` | Toggle warm night light |
+| `F` | Toggle fullscreen mode |
 | `O` | Open another PDF |
-| Drag & drop | Open a PDF |
+| `Esc` | Close Library drawer or Jump-to-page dialog |
+| Drag & Drop | Drop any PDF anywhere to start reading |
 
-**Speed** is measured in pixels per second. 10–15 px/s is a comfortable
-drifting pace; use 30–50 px/s if you read faster.
+---
 
-**Rotation:** keep pressing `R` to cycle 90° → 180° → 270° → upright. At 90° the
-page is turned sideways so you can lie on your side with the Mac.
+## Installing as an App (PWA)
 
-**Direction:** by default the pages drift right and the next page enters from the
-left. Press `D` (or the ↔ button) to make them drift left with the next page
-entering from the right. Your choice is remembered.
+### macOS (Chrome, Edge, or Brave)
+1. Open <http://127.0.0.1:5173>.
+2. Click the **Install** icon in the address bar (or menu `⋮` → **Install Sleep PDF**).
+3. The app opens in its own window without browser chrome and can be kept in the macOS Dock.
 
-**Dim** darkens the pages (up to 90%) and **warm light** adds a paper-warm tint,
-for reading with the lights off without a bright white screen.
+### iPad & iPhone (Safari)
+1. Ensure the iPad is on the same Wi-Fi as your Mac.
+2. In Safari, navigate to `http://<mac-ip>:5173`.
+3. Tap the **Share** button → **Add to Home Screen**.
+4. Tap the icon on your home screen for full-screen edge-to-edge reading.
 
-## Build a static copy
+---
+
+## Build for Production
 
 ```bash
 npm run build
 npm run preview
 ```
 
-The built files live in `dist/`. It is a static site, so it can be served from any
-local web server. (A server is needed because browsers block PDF workers and
-IndexedDB on `file://` pages.)
+Static production files will be built to `dist/`.
 
-## Notes
+---
 
-- Everything stays on your Mac. PDFs are stored in the browser's IndexedDB only
-  to resume the last book; there is no network upload.
-- Works best in Chrome, Safari, or Edge on macOS.
-- `scripts/verify.mjs` is a headless Chrome smoke test: start the dev server,
-  then run `node scripts/verify.mjs` (Chrome must be installed).
+## Privacy & Security
+
+Everything runs locally in your browser. PDFs are stored in local IndexedDB storage on your device only — no files or data are ever transmitted to any external server.
+
