@@ -14,7 +14,8 @@ import './style.css';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
 
-const SESSION_KEY = 'sleep-pdf:session';
+const SESSION_KEY = 'sleeping-reader:session';
+const LEGACY_SESSION_KEY = 'sleep-pdf:session';
 const PAGE_GAP = 28;
 const PAGE_PADDING = 56;
 
@@ -132,8 +133,11 @@ function readSession(forId?: string): SessionState | null {
   try {
     const targetId = forId || docId;
     let raw = targetId ? localStorage.getItem(getSessionKey(targetId)) : null;
+    if (!raw && targetId) {
+      raw = localStorage.getItem(`sleep-pdf:session:${targetId}`);
+    }
     if (!raw) {
-      raw = localStorage.getItem(SESSION_KEY);
+      raw = localStorage.getItem(SESSION_KEY) || localStorage.getItem(LEGACY_SESSION_KEY);
     }
     if (!raw) return null;
     const parsed = JSON.parse(raw) as SessionState;
@@ -975,7 +979,7 @@ async function openBytes(
 
     emptyEl.hidden = true;
     document.body.classList.add('has-doc');
-    document.title = `${name} · Sleep PDF`;
+    document.title = `${name} · Sleeping Reader`;
 
     await new Promise<void>((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(() => resolve())),

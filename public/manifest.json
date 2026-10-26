@@ -1,6 +1,6 @@
 {
-  "name": "Sleep PDF",
-  "short_name": "Sleep PDF",
+  "name": "Sleeping Reader",
+  "short_name": "Sleeping Reader",
   "description": "Read yourself to sleep. Pages drift past slowly so you can read lying down without touching anything.",
   "start_url": "/",
   "display": "standalone",

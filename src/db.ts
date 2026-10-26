@@ -6,7 +6,8 @@ export interface StoredPdf {
   updatedAt: number;
 }
 
-const DB_NAME = 'sleep-pdf';
+const DB_NAME = 'sleeping-reader';
+const LEGACY_DB_NAME = 'sleep-pdf';
 const DB_VERSION = 1;
 const STORE = 'file';
 
@@ -57,12 +58,50 @@ export async function savePdf(record: StoredPdf): Promise<void> {
 export async function getAllPdfs(): Promise<StoredPdf[]> {
   const database = await openDb();
   try {
-    const records = await new Promise<StoredPdf[]>((resolve, reject) => {
+    let records = await new Promise<StoredPdf[]>((resolve, reject) => {
       const tx = database.transaction(STORE, 'readonly');
       const request = tx.objectStore(STORE).getAll();
       request.onsuccess = () => resolve(request.result as StoredPdf[]);
       request.onerror = () => reject(request.error);
     });
+
+    if (records.length === 0) {
+      try {
+        const legacyRecords = await new Promise<StoredPdf[]>((resolve) => {
+          const req = indexedDB.open(LEGACY_DB_NAME, 1);
+          req.onsuccess = () => {
+            const legDb = req.result;
+            if (!legDb.objectStoreNames.contains(STORE)) {
+              legDb.close();
+              resolve([]);
+              return;
+            }
+            const ltx = legDb.transaction(STORE, 'readonly');
+            const lreq = ltx.objectStore(STORE).getAll();
+            lreq.onsuccess = () => {
+              const res = lreq.result as StoredPdf[];
+              legDb.close();
+              resolve(res || []);
+            };
+            lreq.onerror = () => {
+              legDb.close();
+              resolve([]);
+            };
+          };
+          req.onerror = () => resolve([]);
+        });
+
+        if (legacyRecords.length > 0) {
+          for (const rec of legacyRecords) {
+            await savePdf(rec);
+          }
+          records = legacyRecords;
+        }
+      } catch {
+        // migration fallback
+      }
+    }
+
     records.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
     return records;
   } finally {

@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-const CACHE_NAME = 'sleep-pdf-v1';
+const CACHE_NAME = 'sleeping-reader-v1';
 
 // Shell files to precache on install — these make the app work offline.
 // The vite build produces hashed filenames, so we cache on first visit instead.

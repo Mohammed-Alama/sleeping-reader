@@ -1,8 +1,8 @@
-# Sleep PDF
+# Sleeping Reader
 
 A local, distraction-free PDF reader designed for effortless reading in bed. Pages drift past at a gentle pace with zero clicks or page turns — just read until you fall asleep.
 
-![Sleep PDF Reading View](media/reader-hero.png)
+![Sleeping Reader Reading View](media/reader-hero.png)
 
 ---
 
@@ -42,7 +42,7 @@ npm run dev
 
 Then open <http://127.0.0.1:5173>.
 
-Or double-click **Sleep PDF.command** on macOS (it installs dependencies the first time, starts the server, and opens your browser automatically).
+Or double-click **Sleeping Reader.command** on macOS (it installs dependencies the first time, starts the server, and opens your browser automatically).
 
 ---
 
@@ -70,7 +70,7 @@ Or double-click **Sleep PDF.command** on macOS (it installs dependencies the fir
 
 ### macOS (Chrome, Edge, or Brave)
 1. Open <http://127.0.0.1:5173>.
-2. Click the **Install** icon in the address bar (or menu `⋮` → **Install Sleep PDF**).
+2. Click the **Install** icon in the address bar (or menu `⋮` → **Install Sleeping Reader**).
 3. The app opens in its own window without browser chrome and can be kept in the macOS Dock.
 
 ### iPad & iPhone (Safari)
